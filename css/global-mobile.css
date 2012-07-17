@@ -5,8 +5,8 @@
 body{ font:16px/26px Helvetica, Helvetica Neue, Arial; }
 
 .wrapper{
-	width:90%;
-	margin:0 5%;
+        width:90%;
+        margin:0 5%;
 }
 
 /* ===================
@@ -15,11 +15,11 @@ body{ font:16px/26px Helvetica, Helvetica Neue, Arial; }
 
 #header-container,
 #footer-container{
-	background:#000000;
+        background:#000000;
 }
 
 #main aside{
-	background:#777777;
+        background:#777777;
 }
 
 #title{ color:white; }
@@ -32,24 +32,24 @@ body{ font:16px/26px Helvetica, Helvetica Neue, Arial; }
    ============== */
 
 nav a{
-	display:block;
-	margin-bottom:10px;
-	padding:15px 0;
+        display:block;
+        margin-bottom:10px;
+        padding:15px 0;
 
-	background:#111111;
-	color:white;
+        background:#111111;
+        color:white;
 
-	text-align:center;
-	text-decoration:none;
-	font-weight:bold;
+        text-align:center;
+        text-decoration:none;
+        font-weight:bold;
 }
 
 nav a:hover, nav a:visited{
-	color:white;
+        color:white;
 }
 
 nav a:hover{
-	text-decoration:underline;
+        text-decoration:underline;
 }
 
 /* ==============
@@ -57,21 +57,21 @@ nav a:hover{
    ============== */
 
 #main{
-	padding:30px 0;
+        padding:30px 0;
 }
 
 #main article h1{
-	font-size:2em;
+        font-size:2em;
 }
 
 #main aside{
-	color:white;
-	padding:0px 5% 10px;
+        color:white;
+        padding:0px 5% 10px;
 }
 
 #footer-container footer{
-	color:white;
-	padding:20px 0;
+        color:white;
+        padding:20px 0;
 }
 
 /* ===============
@@ -79,4 +79,3 @@ nav a:hover{
    =============== */
 
 .ie7 #title{ padding-top:20px; }
-
