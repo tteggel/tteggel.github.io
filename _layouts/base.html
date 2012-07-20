@@ -39,9 +39,18 @@
           <a class="brand" href="/">tteggeL mohT</a>
           <div class="nav-collapse">
             <ul class="nav">
-              <li {% if page.url == '/index.html' %} class="active"{% endif %}><a href="/"><i class="icon-home"></i> Home</a></li>
-              <li {% if page.categories contains 'articles' %} class="active"{% endif %}><a href="/articles"><i class="icon-book"></i> Articles</a></li>
-              <li {% if page.categories contains 'methods' %} class="active"{% endif %}><a href="/methods"><i class="icon-refresh"></i> Methods</a></li>
+              <li {% if page.url == '/index.html' %} class="active"{% endif %}>
+                <a href="/"><i class="icon-home"></i> Home</a>
+              </li>
+              <li {% if page.categories contains 'articles' %} class="active"{% endif %}>
+                <a href="/articles"><i class="icon-file"></i> Articles</a>
+              </li>
+              <li {% if page.categories contains 'notes' %} class="active"{% endif %}>
+                <a href="/notes"><i class="icon-pencil"></i> Notes</a>
+              </li>
+              <li {% if page.categories contains 'methods' %} class="active"{% endif %}>
+                <a href="/methods"><i class="icon-refresh"></i> Methods</a>
+              </li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
