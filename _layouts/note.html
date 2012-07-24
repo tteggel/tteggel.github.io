@@ -1,0 +1,24 @@
+---
+layout: default
+---
+<div class="row">
+  <div class="span8">
+    {{ content }}
+  </div>
+  <div class="span4">
+    {% if page.tags %}
+    <div class="well">
+      <dl class="dl-horizontal">
+        <dt>Tags:</dt>
+        <dd>{% for tag in page.tags %}
+          <span class="label"><i class="icon-tag"></i>{{ tag }}</span>
+      {% endfor %}
+        </dd>
+        <dt>Versions:</dt>
+        <dd><a href="https://raw.github.com/thom-leggett/thom-leggett.github.com/master/notes/_posts{{ page.url | replace: 'notes/', '' }}.md">Text version</a>
+        </dd>
+      </dl>
+    </div>
+    {% endif %}
+  </div>
+</div>

@@ -24,9 +24,37 @@
         <link rel="stylesheet" href="less/style.css">
          -->
 
+        <link href="/js/libs/google-code-prettify/prettify.css" type="text/css" rel="stylesheet">
+        <script src="/js/libs/google-code-prettify/prettify.js"></script>
         <script src="/js/libs/modernizr-2.5.3-respond-1.1.0.min.js"></script>
+        <script type="text/javascript">
+// Stolen from StackOverflow. Find all </code><pre><code>
+// elements on the page and add the "prettyprint" style. If at least one
+// prettyprint element was found, call the Google Prettify prettyPrint() API.
+//http://sstatic.net/so/js/master.js?v=6523
+function styleCode()
+{
+    if (typeof disableStyleCode != "undefined")
+    {
+        return;
+    }
+
+    var a = false;
+
+    $("pre code").parent().each(function()
+    {
+        if (!$(this).hasClass("prettyprint"))
+        {
+            $(this).addClass("prettyprint");
+            a = true
+        }
+    });
+
+    if (a) { prettyPrint() }
+}
+</script>
 </head>
-<body>
+<body onload="styleCode()">
 <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
     <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
