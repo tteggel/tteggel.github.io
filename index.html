@@ -15,14 +15,14 @@ layout: base
   <div class="span4">
     <h2>Notes</h2>
     {% for item in site.categories.notes limit:3 %}
-      <p>{{ item }}</p>
+      <p><a href="{{ item.url }}">{{ item.title }}</a></p>
     {% endfor %}
     <p><a class="btn" href="notes">More notes &raquo;</a></p>
   </div>
   <div class="span4">
     <h2>Methods</h2>
     {% for item in site.categories.methods limit:3 %}
-      <p>{{ item }}</p>
+      <p><a href="{{ item.url }}">{{ item.title }}</a></p>
     {% endfor %}
     <p><a class="btn" href="methods">More methods &raquo;</a></p>
   </div>
