@@ -15,7 +15,9 @@ layout: default
       {% endfor %}
         </dd>
         <dt>Versions:</dt>
-        <dd><a href="https://raw.github.com/thom-leggett/thom-leggett.github.com/master/notes/_posts/{{ page.date | date: '%Y-%m-%d' }}-{{ page.url | replace: '/notes/', '' }}.md">Text version</a>
+        <dd>
+          <a href="https://raw.github.com/thom-leggett/thom-leggett.github.com/master/notes/_posts/{{ page.date | date: '%Y-%m-%d' }}-{{ page.url | replace: '/notes/', '' }}.md">Text version</a>
+          <a href="https://github.com/thom-leggett/thom-leggett.github.com/commits/master/notes/_posts/"{{ page.date | date: '%Y-%m-%d' }}-{{ page.url | replace: '/notes/', '' }}.md">Older versions</a>
         </dd>
       </dl>
     </div>
