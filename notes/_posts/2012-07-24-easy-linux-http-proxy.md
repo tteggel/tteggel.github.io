@@ -23,7 +23,7 @@ HTTP proxy setup on desktop Linux is a disaster. Switching from home to office l
           test "X$SUPERCMD" = "X$prog" ||
                               exec /usr/bin/super -r $0 $prog ${1+"$@"}
 
-          sed -i "s/^\(\s*\)forward\([\/\sA-Za-z0-9\.:]*\)/\#\1forward\2/" /etc/privoxy/config
+          sed -i "s/^\(\s*forward\s*\/\s*[A-Za-z0-9\.:]*\)/\#\1/" /etc/privoxy/config
 
   4. Put `proxy-on` script on path:
           #!/bin/sh
@@ -31,7 +31,7 @@ HTTP proxy setup on desktop Linux is a disaster. Switching from home to office l
           test "X$SUPERCMD" = "X$prog" ||
                               exec /usr/bin/super -r $0 $prog ${1+"$@"}
 
-          sed -i "s/^\#\(\s*\)forward\([\/\sA-Za-z0-9\.:]*\)/\1forward\2/" /etc/privoxy/config
+          sed -i "s/^\#\(\s*forward\s*\/\s*[A-Za-z0-9\.:]*\)/\1/" /etc/privoxy/config
 
   5. Add `/etc/super.tab` entires for `proxy-off` and `proxy-on`:
           proxy-off           /path/to/proxy-off        username
