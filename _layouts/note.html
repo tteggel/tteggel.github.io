@@ -6,21 +6,28 @@ layout: default
     {{ content }}
   </div>
   <div class="span4">
-    {% if page.tags %}
     <div class="well">
       <dl class="dl-horizontal">
+        {% if page.tags %}
         <dt>Tags:</dt>
-        <dd>{% for tag in page.tags %}
+        <dd>
+          {% for tag in page.tags %}
           <span class="label"><i class="icon-tag"></i>{{ tag }}</span>
-      {% endfor %}
+          {% endfor %}
         </dd>
+        {% endif %}
+
         <dt>Versions:</dt>
         <dd>
           <a href="https://raw.github.com/thom-leggett/thom-leggett.github.com/master/notes/_posts/{{ page.date | date: '%Y-%m-%d' }}-{{ page.url | replace: '/notes/', '' }}.md">Text version</a>
           <a href="https://github.com/thom-leggett/thom-leggett.github.com/commits/master/notes/_posts/{{ page.date | date: '%Y-%m-%d' }}-{{ page.url | replace: '/notes/', '' }}.md">Older versions</a>
         </dd>
+
+        <dt>License:</dt>
+        <dd>
+          <a rel="license" href="http://creativecommons.org/licenses/by/3.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by/3.0/80x15.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">{{ page.title }}</span> by <a xmlns:cc="http://creativecommons.org/ns#" href="tteggel.org" property="cc:attributionName" rel="cc:attributionURL">Thom Leggett</a> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution 3.0 Unported License</a>.
+        </dd>
       </dl>
     </div>
-    {% endif %}
   </div>
 </div>
