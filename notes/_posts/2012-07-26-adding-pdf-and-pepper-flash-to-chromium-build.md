@@ -2,7 +2,7 @@
 layout: note
 title: Adding PDF and Pepper Flash to chromium build
 description: Adding PDF and Pepper Flash to chromium build
-tags: ["desktop linux","linux", "chromium", "google chrome", "google", "chrome"]
+tags: ["desktop linux", "linux", "chromium", "google chrome", "google", "chrome"]
 ---
 ## The problem
 Chromium is [easy to build from source on Linux][1]. But it's missing the PDF and PPAPI Flash (Pepper Flash) plugin. PDF support is useful for print preview. Pepper Flash is actively supported by Adobe and Google on Linux since [Adobe discontinued support for the standalone player][2] therefore this is the only way to get latest version of for Flash on Linux.
