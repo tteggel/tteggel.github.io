@@ -7,7 +7,7 @@ tags: ["metrics", "graph", "measure", "visualisation", "cognitive bias", "psycho
 Measure Show Learn is a 15 minute lightning talk that I gave at the [Bath Scrum User Group][2] on Tuesday 11th September.
 
 ## Abstract
-> Visualisation is a key technique to help ensure a successful outcome for software development efforts. As we work in such an abstract realm special care and attention is required to make our work more tangible. This effort will be rewarded with better decision making at all levels as well as  more empowered and engaged teams and stakeholders. This talk aims to seed some talking points rather than provide answers.
+> Visualisation is a key technique to help ensure a successful outcome for software development efforts. As we work in such an abstract realm special care and attention is required to make our work more tangible. This effort will be rewarded with better decision making at all levels as well as  more empowered teams and more engaged stakeholders. This talk aims to seed some talking points rather than provide answers.
 
 ## Interactive Presentation
 Follow the link below to view the presentation:
