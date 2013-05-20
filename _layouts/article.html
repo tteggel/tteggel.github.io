@@ -5,8 +5,26 @@ layout: default
   <div class="span8">
     {{ content }}
   </div>
-  <div class="span4">
-    <div class="well">
+</div>
+<div class="row">
+  <div class="span8">
+    <hr/>
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_shortname = 'tteggel';
+      (function() {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+  </div>
+</div>
+<div class="row">
+  <div class="span8">
+    <hr/>
       <dl class="dl-horizontal">
         {% if page.tags %}
         <dt>Tags:</dt>
@@ -28,21 +46,5 @@ layout: default
           <a rel="license" href="http://creativecommons.org/licenses/by/3.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by/3.0/80x15.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">{{ page.title }}</span> by <a xmlns:cc="http://creativecommons.org/ns#" href="https://twitter.com/thomleggett" property="cc:attributionName" rel="cc:attributionURL">Thom Leggett</a> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution 3.0 Unported License</a>.
         </dd>
       </dl>
-    </div>
-  </div>
-</div>
-<div class="row">
-  <div class="span8">
-    <div id="disqus_thread"></div>
-    <script type="text/javascript">
-      var disqus_shortname = 'tteggel';
-      (function() {
-      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-      dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
-      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-      })();
-    </script>
-    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
   </div>
 </div>
