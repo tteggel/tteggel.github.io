@@ -1,0 +1,67 @@
+==================================================================
+https://keybase.io/tteggel
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of http://tteggel.org
+  * I am tteggel (https://keybase.io/tteggel) on keybase.
+  * I have a public key with fingerprint 667C 8788 2225 32B8 1AFD  E8F0 6ECA 37AF 0A9F CA4B
+
+To do so, I am signing this object:
+
+{
+    "body": {
+        "key": {
+            "fingerprint": "667c8788222532b81afde8f06eca37af0a9fca4b",
+            "host": "keybase.io",
+            "key_id": "6eca37af0a9fca4b",
+            "kid": "01016563e47e2b36351f32a70d9eecaf1a948067e01a7bc1e382b3a0d28eb503ead40a",
+            "uid": "f0646036f215edf5c47f6e58e34ae819",
+            "username": "tteggel"
+        },
+        "service": {
+            "hostname": "tteggel.org",
+            "protocol": "http:"
+        },
+        "type": "web_service_binding",
+        "version": 1
+    },
+    "ctime": 1424955217,
+    "expire_in": 157680000,
+    "prev": "471cf5c9f52d2fda3578c9a1bc55a2c20d1d6fae4e212e94eb06330afdbb3e97",
+    "seqno": 3,
+    "tag": "signature"
+}
+
+which yields the signature:
+
+-----BEGIN PGP MESSAGE-----
+Version: Keybase OpenPGP v2.0.7
+Comment: https://keybase.io/crypto
+
+yMIaAnicZZJrSBRRFMfXMi0hsrI2JKgmIq3N5t55L/SQil5ECUtCSNu9M2fGaXVn
+2x3tKb0fKvT4UCRJkiH0wgwqKShNrKhICqKMtILIDaOMwkh60B2pD9H9crnn/P+/
+e865t33kUF9GyuHuNWdiuctqUx7cmlvmC/X5C7Zy1DE2c8GtXAQGN9OOWhCPxe2o
+ywU5WVZ0VVFVjLEkYKoiYhqgmrwMOhEUYvJEM3UiUi7AFTsJz8EwlCQgz3ZYjB3C
+tuFx/tdHBhM84pEsyQKICmAqyIKETAEThTc0YB4TEU1UeVkBHhGF6ggElckIb2AV
+qMQLQAyRJwxXNohjlYkyL8gmRhIYpqSLiimDpIIgElCR5gkTEI+SUmBq1wXLghKu
+IsCxYLmtgzcBr5F/BXlO3GLOWNxxHd0pYYli140FPZ+7OeYJNwIN/0GEqR012BCZ
+oRziCduJckHElLpre0wkYlGTJIyUAAebYnYcwrankBRZ5dnyroFyhhQVpLMGNFPC
+BjYNIkiKqmsEUV2SCNYxbyBDNgmIgBEGTQTKy4LAsweiVABN4bymNkQdLiiwMonF
+kAnbihK3LA5cRVtrUaovJcOXNmyI9w18GSMy/36ORdpwXxP32o2s7jDrChuszGdd
+sfzDnbe7uofdvcfv6G8cvfZz1QytwVGzF+2/Pi1NMHvmJ5e+P/+ypnX27v3XepP5
+a+9f7UlOrz/mF8efyK4ZBTdx1qx8sSO9ij5uO2uk110J5ZzetnGgdfQKXGTt3F59
+2Zz5rfLDusCWGx/3fXpV09mo/3o0v2VqOp23K3fh8kjgeXvfhA0lzePe/qj8+XVl
+5sXXB9701vpIsvL79dIdv3JC78/Sr2k7jyivKg7m1M+gs67d2XPPX/bgYfO7SXeO
+vngyUHg8tWDOqtnFi6vrpL0d60P+3MeHxtTu/ULal4zdTpULTeeyWhZMOT756cST
+L0/1dw9ELv0G3m8tQQ==
+=roAu
+-----END PGP MESSAGE-----
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/tteggel
+
+==================================================================
