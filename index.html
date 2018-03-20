@@ -1,53 +1,19 @@
----
-layout: base
----
-
-
-<div class="row">
-  <div class="span12">
-  </div>
-  <div class="span6">
-    <div class="well">
-    <h2>BrisFunctional</h2>
-    <p>Bristol Functional Programming Club
-meets at 6.30pm on the last Tuesday of every month at Nokia's Wine Street office
-to discuss fp, and the joy that it brings.</p>
-    <dl class="dl-horizontal">
-      <dt>Twitter:</dt>
-      <dd><a href="https://twitter.com/brisfunctional">@BrisFunctional</a></dd>
-      <dt>Forum:</dt>
-      <dd><a href="https://groups.google.com/forum/?fromgroups#!forum/brisfunctional">Google Groups</a></dd>
-      <dt>Code:</dt>
-      <dd><a href="https://github.com/BrisFunctional">GitHub</a></dd>
-    </dl>
-    </div>
-  </div>
-  <div class="span6">
-    <div class="well">
-      <h2>Bath Scrum User Group</h2>
-      <p>The poorly named Bath Scrum User Group unites people from across the South West and Wales who share an interest in agile methods of all descriptions. Monthly meetings tend to be a talk followed by some great conversation in the pub.</p>
-      <dl class="dl-horizontal">
-        <dt>Twitter:</dt>
-        <dd><a href="https://twitter.com/BathScrumUsers">@BathScrumUsers</a></dd>
-        <dt>Schedule:</dt>
-        <dd><a href="http://www.meetup.com/Bath-Scrum-User-Group/">Meetup</a></dd>
-    </div>
-  </div>
-</div>
-
-<div class="row">
-  <div class="span4">
-    <h2>Articles</h2>
-    {% for item in site.categories.articles limit:3 %}
-      <p><a href="{{ item.url }}">{{ item.title }}</a></p>
-    {% endfor %}
-    <p><a class="btn" href="articles">More articles &raquo;</a></p>
-  </div>
-  <div class="span4">
-    <h2>Notes</h2>
-    {% for item in site.categories.notes limit:3 %}
-      <p><a href="{{ item.url }}">{{ item.title }}</a></p>
-    {% endfor %}
-    <p><a class="btn" href="notes">More notes &raquo;</a></p>
-  </div>
-</div>
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <meta name="description" content="Thom Leggett">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body>
+        <h1>Thom Leggett</h1>
+        <p>Building software, cloud, geek stuff, conversations: <a href="https://twitter.com/thomleg">Twitter</a></p>
+        <p>Family, dog, cat, cute, pretty stuff: <a href="https://www.instagram.com/tteggel">Instagram</a></p>
+        <p>Code: <a href="https://github.com/tteggel">GitHub</a></p>
+        <p>Mail / GPG: <a href="thom">thom@tteggel.org</a></p>
+        <p>Resume: <a href="https://www.linkedin.com/in/tteggel/">LinkedIn</a></p>
+        <p><strike>Friends / family / pets: <a href="">Facebook</a></strike></p>
+        <p>Proofs of the above: <a href="https://keybase.io/tteggel">Keybase</a></p>
+    </body>
+</html>
