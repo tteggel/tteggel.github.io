@@ -51,6 +51,7 @@
   <div class="controls">
     <button id="appleSignInBtn">Sign in to Apple Music</button>
     <button id="playSnippetBtn" disabled>Pass The Parcel!</button>
+    <button id="skipBtn" disabled>Next Track</button>
   </div>
 
   <script>
@@ -68,6 +69,7 @@
     // DOM elements
     const appleSignInBtn = document.getElementById('appleSignInBtn');
     const playSnippetBtn = document.getElementById('playSnippetBtn');
+    const skipBtn        = document.getElementById('skipBtn');
     const songInfo       = document.getElementById('songInfo');
 
     // This will hold our setTimeout handle for snippet length
@@ -121,6 +123,7 @@
         // Now that we have a queue, enable snippet button
         playSnippetBtn.disabled = false;
         appleSignInBtn.disabled = true;
+        skipBtn.disabled = false;
 
         // Display the first track info
         updateSongInfo();
@@ -174,6 +177,11 @@
       } else {
         songInfo.textContent = 'No track loaded.';
       }
+
+      skipBtn.addEventListener('click', async () => {
+        await music.skipToNextItem();
+      })
+
     }
   </script>
 </body>
