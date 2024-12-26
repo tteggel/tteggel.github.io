@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Pass the Parcel - Christmas Snippet</title>
+  <title>Pass the Parcel - Auto-cycling Songs</title>
   <style>
     body {
       font-family: sans-serif;
@@ -14,6 +14,9 @@
       margin: 0;
       background: #f8f8f8;
     }
+    h1 {
+      margin-top: 0;
+    }
     button {
       padding: 1em 2em;
       font-size: 1.2rem;
@@ -22,7 +25,6 @@
       color: #fff;
       border: none;
       border-radius: 0.3em;
-      margin-top: 1em;
     }
     button:disabled {
       background: #aaa;
@@ -35,37 +37,82 @@
   <h1>Pass the Parcel</h1>
   <button id="playSnippetBtn">Play Snippet</button>
 
-  <!-- Hidden audio element; replace `src` with your own song as needed. -->
-  <audio id="christmasSong" src="https://cdn.pixabay.com/download/audio/2021/12/13/audio_b2b4b398e3.mp3?filename=we-wish-you-a-merry-christmas-22356.mp3"></audio>
+  <!-- Hidden audio element; we'll change its src in JavaScript. -->
+  <audio id="christmasSong"></audio>
 
   <script>
+    // 1) List of songs. Replace these URLs with your own MP3 links.
+    const songs = [
+      {
+        title: 'We Wish You a Merry Christmas',
+        url: 'https://cdn.pixabay.com/download/audio/2021/12/13/audio_b2b4b398e3.mp3?filename=we-wish-you-a-merry-christmas-22356.mp3'
+      },
+      {
+        title: 'Deck the Halls',
+        url: 'https://cdn.pixabay.com/download/audio/2021/12/11/audio_7a166ecff6.mp3?filename=deck-the-halls-21977.mp3'
+      },
+      {
+        title: 'Jingle Bells',
+        url: 'https://cdn.pixabay.com/download/audio/2021/10/23/audio_e40bc83c55.mp3?filename=jingle-bells-19567.mp3'
+      }
+    ];
+
+    // 2) Track which song is currently playing.
+    let currentSongIndex = 0;
+
+    // 3) Get references to DOM elements.
     const playSnippetBtn = document.getElementById('playSnippetBtn');
     const christmasSong = document.getElementById('christmasSong');
+
+    // Keep a reference to the timeout so we can clear it if needed.
     let snippetTimeout = null;
 
-    // When the button is clicked, play for a random snippet from 5 to 30 seconds
+    // 4) Loads the current song (by index) into the audio element.
+    function loadCurrentSong() {
+      const { url } = songs[currentSongIndex];
+      christmasSong.src = url;
+      christmasSong.currentTime = 0;
+      christmasSong.pause();
+    }
+
+    // 5) Advance to the next song (wrap around to 0 after the last).
+    function goToNextSong() {
+      currentSongIndex++;
+      if (currentSongIndex >= songs.length) {
+        currentSongIndex = 0;
+      }
+      loadCurrentSong();
+    }
+
+    // 6) When "Play Snippet" is clicked:
+    //    1) Play random snippet (5–30 sec) of current song.
+    //    2) After snippet, pause & move to next song.
     playSnippetBtn.addEventListener('click', () => {
-      // Disable the button until snippet is done playing
       playSnippetBtn.disabled = true;
 
-      // Choose a random length between 5 and 30 seconds
+      // Pick random length between 5 and 30 seconds.
       const snippetLength = Math.floor(Math.random() * 26) + 5;
 
-      // Play the song from its current position
+      // Play from current time in current song.
       christmasSong.play();
 
-      // Clear any previous timeout (in case)
+      // Clear any previous timeout.
       if (snippetTimeout) {
         clearTimeout(snippetTimeout);
       }
 
-      // After snippetLength seconds, pause the song
+      // After snippetLength seconds, pause and move to next song.
       snippetTimeout = setTimeout(() => {
         christmasSong.pause();
-        // Re-enable the button so user can play again
+        goToNextSong();
+
+        // Re-enable button for next snippet.
         playSnippetBtn.disabled = false;
       }, snippetLength * 1000);
     });
+
+    // 7) Initialize by loading the first song.
+    loadCurrentSong();
   </script>
 
 </body>
