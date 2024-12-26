@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <title>Pass the Parcel - Apple Music Playlist</title>
   <!-- Include MusicKit JS from Apple CDN -->
-  <script src="https://js-cdn.music.apple.com/musickit/v3/musickit.js"></script>
+  <script src="https://js-cdn.music.apple.com/musickit/v3/musickit.js" data-web-components async></script>
   <style>
     body {
       font-family: sans-serif;
@@ -57,8 +57,7 @@
     /***********************************************
      * 1) Configure MusicKit with your credentials
      ***********************************************/
-    const developerToken = 'eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkFRTDQ4TUFTMkIifQ.eyJpYXQiOjE3MzUyMjM1MjksImV4cCI6MTc1MDc3NTUyOSwiaXNzIjoiSjZES1MzOTU4RyJ9.KYvGnk4HjTQ7s2OyqS6AAihx4lXkRH6Uf1eD1lBRue9WY143ZmEmv2jEQx_StCetHS6tZX7oSIg5LT7N9FHkrw'; 
-    // IMPORTANT: Replace this with your *own* Apple Music developer token.
+    const developerToken = 'eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkFRTDQ4TUFTMkIifQ.eyJvcmlnaW4iOlsiaHR0cHM6Ly90dGVnZ2VsLm9yZyIsImh0dHBzOi8vb21pbm91cy1sYW1wLTc3NTc3d3h4eGZnOWctODA4MC5hcHAuZ2l0aHViLmRldiJdLCJpYXQiOjE3MzUyMjYyMDMsImV4cCI6MTc1MDc3ODIwMywiaXNzIjoiSjZES1MzOTU4RyJ9.9CvW1f0qF0pD9qvRrc731GJlrxmeC2uV-nIiOJF5ycRJ0ChK-DCyyUwHyJbrvrzH4SycW9rmpFW8XwKoyc2GJA';
 
     const playlistId = 'pl.c21e1cd068b54c3581f4c92d9e1545b5'; 
     // Replace with your Apple Music playlist ID, e.g. 'pl.u-ALabc123...'
@@ -77,11 +76,11 @@
     /***********************************************
      * 2) Initialize MusicKit
      ***********************************************/
-    document.addEventListener('musickitloaded', () => {
-      MusicKit.configure({
+    document.addEventListener('musickitloaded', async () => {
+      await MusicKit.configure({
         developerToken: developerToken,
         app: {
-          name: 'PassTheParcel',
+          name: 'Pass The Parcel',
           build: '1.0'
         }
       });
@@ -89,22 +88,22 @@
       music = MusicKit.getInstance();
 
       // We want to loop the entire playlist when it ends
-      music.player.repeatMode = MusicKit.REPEAT_MODE_ALL;
+      //music.player.repeatMode = MusicKit.REPEAT_MODE_ALL;
 
       // Let the user sign in to Apple Music
       appleSignInBtn.disabled = false;
 
       // Update track info when player changes tracks
-      music.player.addEventListener('mediaItemDidChange', updateSongInfo);
+      //music.player.addEventListener('mediaItemDidChange', updateSongInfo);
 
       // Also handle playback ended (just in case user’s snippet ends exactly at track end)
-      music.player.addEventListener('playbackStateDidChange', () => {
-        if (music.player.playbackState === MusicKit.PlaybackStates.ENDED) {
-          // If a track ended, Apple MusicKit auto-advances to next track in the queue,
-          // so we just update our displayed info.
-          updateSongInfo();
-        }
-      });
+      // music.player.addEventListener('playbackStateDidChange', () => {
+      //   if (music.player.playbackState === MusicKit.PlaybackStates.ENDED) {
+      //     // If a track ended, Apple MusicKit auto-advances to next track in the queue,
+      //     // so we just update our displayed info.
+      //     updateSongInfo();
+      //   }
+      // });
     });
 
     /***********************************************
