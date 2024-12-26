@@ -50,7 +50,7 @@
   <!-- Buttons for sign-in and snippet playback -->
   <div class="controls">
     <button id="appleSignInBtn">Sign in to Apple Music</button>
-    <button id="playSnippetBtn" disabled>Play Snippet</button>
+    <button id="playSnippetBtn" disabled>Pass The Parcel!</button>
   </div>
 
   <script>
@@ -88,7 +88,8 @@
       music = MusicKit.getInstance();
 
       // We want to loop the entire playlist when it ends
-      music.repeatMode = MusicKit.REPEAT_MODE_ALL;
+      music.shuffleMode = MusicKit.PlayerShuffleMode.songs;
+      music.repeatMode = MusicKit.PlayerRepeatMode.all;
 
       // Let the user sign in to Apple Music
       appleSignInBtn.disabled = false;
