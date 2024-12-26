@@ -88,22 +88,22 @@
       music = MusicKit.getInstance();
 
       // We want to loop the entire playlist when it ends
-      //music.player.repeatMode = MusicKit.REPEAT_MODE_ALL;
+      music.repeatMode = MusicKit.REPEAT_MODE_ALL;
 
       // Let the user sign in to Apple Music
       appleSignInBtn.disabled = false;
 
       // Update track info when player changes tracks
-      //music.player.addEventListener('mediaItemDidChange', updateSongInfo);
+      music.addEventListener('mediaItemDidChange', updateSongInfo);
 
-      // Also handle playback ended (just in case user’s snippet ends exactly at track end)
-      // music.player.addEventListener('playbackStateDidChange', () => {
-      //   if (music.player.playbackState === MusicKit.PlaybackStates.ENDED) {
-      //     // If a track ended, Apple MusicKit auto-advances to next track in the queue,
-      //     // so we just update our displayed info.
-      //     updateSongInfo();
-      //   }
-      // });
+      //Also handle playback ended (just in case user’s snippet ends exactly at track end)
+      music.addEventListener('playbackStateDidChange', () => {
+        if (music.playbackState === MusicKit.PlaybackStates.ENDED) {
+          // If a track ended, Apple MusicKit auto-advances to next track in the queue,
+          // so we just update our displayed info.
+          updateSongInfo();
+        }
+      });
     });
 
     /***********************************************
@@ -140,7 +140,7 @@
       const snippetLength = Math.floor(Math.random() * 26) + 5;
 
       // Start or resume playback
-      music.player.play();
+      music.play();
 
       // Clear any previous snippet timeout
       if (snippetTimeout) {
@@ -151,7 +151,7 @@
       snippetTimeout = setTimeout(() => {
         // If we’re at or beyond the track’s duration, Apple MusicKit will auto-advance.
         // We just pause, letting Apple’s logic handle the next track if the song ended exactly.
-        music.player.pause();
+        music.pause();
 
         // Re-enable button
         playSnippetBtn.disabled = false;
@@ -162,7 +162,7 @@
      * 5) Update Song Info Display
      ***********************************************/
     function updateSongInfo() {
-      const currentItem = music.player.nowPlayingItem;
+      const currentItem = music.nowPlayingItem;
       if (currentItem) {
         // Construct a user-friendly label
         const artist  = currentItem.artistName || 'Unknown Artist';
