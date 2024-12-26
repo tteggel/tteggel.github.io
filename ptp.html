@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Pass the Parcel - Christmas Snippet</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      background: #f8f8f8;
+    }
+    button {
+      padding: 1em 2em;
+      font-size: 1.2rem;
+      cursor: pointer;
+      background: #c33;
+      color: #fff;
+      border: none;
+      border-radius: 0.3em;
+      margin-top: 1em;
+    }
+    button:disabled {
+      background: #aaa;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Pass the Parcel</h1>
+  <button id="playSnippetBtn">Play Snippet</button>
+
+  <!-- Hidden audio element; replace `src` with your own song as needed. -->
+  <audio id="christmasSong" src="https://cdn.pixabay.com/download/audio/2021/12/13/audio_b2b4b398e3.mp3?filename=we-wish-you-a-merry-christmas-22356.mp3"></audio>
+
+  <script>
+    const playSnippetBtn = document.getElementById('playSnippetBtn');
+    const christmasSong = document.getElementById('christmasSong');
+    let snippetTimeout = null;
+
+    // When the button is clicked, play for a random snippet from 5 to 30 seconds
+    playSnippetBtn.addEventListener('click', () => {
+      // Disable the button until snippet is done playing
+      playSnippetBtn.disabled = true;
+
+      // Choose a random length between 5 and 30 seconds
+      const snippetLength = Math.floor(Math.random() * 26) + 5;
+
+      // Play the song from its current position
+      christmasSong.play();
+
+      // Clear any previous timeout (in case)
+      if (snippetTimeout) {
+        clearTimeout(snippetTimeout);
+      }
+
+      // After snippetLength seconds, pause the song
+      snippetTimeout = setTimeout(() => {
+        christmasSong.pause();
+        // Re-enable the button so user can play again
+        playSnippetBtn.disabled = false;
+      }, snippetLength * 1000);
+    });
+  </script>
+
+</body>
+</html>
