@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Pass the Parcel - Auto-cycling Songs</title>
+  <title>Pass the Parcel - Playlist</title>
   <style>
     body {
       font-family: sans-serif;
@@ -30,18 +30,23 @@
       background: #aaa;
       cursor: not-allowed;
     }
+    .song-info {
+      margin: 1em 0;
+      font-size: 1.1rem;
+    }
   </style>
 </head>
 <body>
 
   <h1>Pass the Parcel</h1>
+  <div class="song-info" id="songInfo"></div>
   <button id="playSnippetBtn">Play Snippet</button>
 
-  <!-- Hidden audio element; we'll change its src in JavaScript. -->
-  <audio id="christmasSong"></audio>
+  <!-- Hidden audio element -->
+  <audio id="audioPlayer"></audio>
 
   <script>
-    // 1) List of songs. Replace these URLs with your own MP3 links.
+    // 1) Playlist of songs. Replace 'url' with your own MP3 links.
     const songs = [
       {
         title: 'We Wish You a Merry Christmas',
@@ -57,62 +62,95 @@
       }
     ];
 
-    // 2) Track which song is currently playing.
     let currentSongIndex = 0;
 
-    // 3) Get references to DOM elements.
     const playSnippetBtn = document.getElementById('playSnippetBtn');
-    const christmasSong = document.getElementById('christmasSong');
-
-    // Keep a reference to the timeout so we can clear it if needed.
+    const audioPlayer = document.getElementById('audioPlayer');
+    const songInfo = document.getElementById('songInfo');
     let snippetTimeout = null;
 
-    // 4) Loads the current song (by index) into the audio element.
+    // 2) Load the current song into the player
     function loadCurrentSong() {
-      const { url } = songs[currentSongIndex];
-      christmasSong.src = url;
-      christmasSong.currentTime = 0;
-      christmasSong.pause();
+      const { title, url } = songs[currentSongIndex];
+      audioPlayer.src = url;
+      audioPlayer.currentTime = 0;
+      audioPlayer.pause();
+      songInfo.textContent = `Now playing: ${title}`;
     }
 
-    // 5) Advance to the next song (wrap around to 0 after the last).
-    function goToNextSong() {
-      currentSongIndex++;
-      if (currentSongIndex >= songs.length) {
-        currentSongIndex = 0;
-      }
+    // 3) Move to the next song (wrap around if at the end)
+    function nextSong() {
+      currentSongIndex = (currentSongIndex + 1) % songs.length;
       loadCurrentSong();
     }
 
-    // 6) When "Play Snippet" is clicked:
-    //    1) Play random snippet (5–30 sec) of current song.
-    //    2) After snippet, pause & move to next song.
+    // 4) On "Play Snippet," we play a random chunk (5–30s).
+    //    If the snippet reaches the end of the song, we advance to nextSong().
     playSnippetBtn.addEventListener('click', () => {
+      // Disable button until snippet is done
       playSnippetBtn.disabled = true;
 
-      // Pick random length between 5 and 30 seconds.
-      const snippetLength = Math.floor(Math.random() * 26) + 5;
+      // Random snippet length: 5 to 30 seconds
+      let snippetLength = Math.floor(Math.random() * 26) + 5;
 
-      // Play from current time in current song.
-      christmasSong.play();
+      // If the user clicks too quickly, duration might be 0 or NaN.
+      // We'll try to handle that by waiting for loadedmetadata if needed.
+      const duration = audioPlayer.duration;
 
-      // Clear any previous timeout.
+      // If we don't know the duration yet, or it's zero, attempt to play the song 
+      // so the browser loads enough to get metadata. We'll try a small delay.
+      if (!duration || isNaN(duration)) {
+        audioPlayer.play();
+        audioPlayer.pause();
+        // Wait a moment for metadata to load, then do the snippet logic
+        setTimeout(() => {
+          playSnippet();
+        }, 300);
+      } else {
+        // If we already know the duration, proceed
+        playSnippet();
+      }
+    });
+
+    function playSnippet() {
+      const duration = audioPlayer.duration;
+      const timeLeft = duration - audioPlayer.currentTime;
+
+      // Actual snippet might be shortened if there's not enough time left
+      let snippetLength = Math.floor(Math.random() * 26) + 5;
+      if (snippetLength > timeLeft) {
+        snippetLength = timeLeft; 
+      }
+
+      // Start playback
+      audioPlayer.play();
+
+      // Clear any previous timeout
       if (snippetTimeout) {
         clearTimeout(snippetTimeout);
       }
 
-      // After snippetLength seconds, pause and move to next song.
+      // Pause after the snippet
       snippetTimeout = setTimeout(() => {
-        christmasSong.pause();
-        goToNextSong();
+        audioPlayer.pause();
 
-        // Re-enable button for next snippet.
+        // If we've reached (or passed) the end of the song, move to next
+        if (audioPlayer.currentTime >= audioPlayer.duration) {
+          nextSong();
+        }
+
         playSnippetBtn.disabled = false;
       }, snippetLength * 1000);
-    });
+    }
 
-    // 7) Initialize by loading the first song.
+    // 5) Initialize by loading the first song
     loadCurrentSong();
+
+    // Optional: when the song itself ends naturally (if snippet goes exactly to end)
+    // ensure we move to the next. Some browsers might fire "ended" event.
+    audioPlayer.addEventListener('ended', () => {
+      nextSong();
+    });
   </script>
 
 </body>
