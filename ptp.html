@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Pass the Parcel - Playlist</title>
+  <title>Pass the Parcel - Apple Music Playlist</title>
+  <!-- Include MusicKit JS from Apple CDN -->
+  <script src="https://js-cdn.music.apple.com/musickit/v3/musickit.js"></script>
   <style>
     body {
       font-family: sans-serif;
@@ -17,9 +19,13 @@
     h1 {
       margin-top: 0;
     }
+    .controls {
+      margin-top: 1em;
+    }
     button {
-      padding: 1em 2em;
-      font-size: 1.2rem;
+      padding: 0.8em 1.2em;
+      font-size: 1rem;
+      margin: 0.5em;
       cursor: pointer;
       background: #c33;
       color: #fff;
@@ -31,127 +37,143 @@
       cursor: not-allowed;
     }
     .song-info {
-      margin: 1em 0;
+      margin: 0.5em 0;
       font-size: 1.1rem;
     }
   </style>
 </head>
 <body>
 
-  <h1>Pass the Parcel</h1>
+  <h1>Pass the Parcel - Apple Music</h1>
   <div class="song-info" id="songInfo"></div>
-  <button id="playSnippetBtn">Play Snippet</button>
 
-  <!-- Hidden audio element -->
-  <audio id="audioPlayer"></audio>
+  <!-- Buttons for sign-in and snippet playback -->
+  <div class="controls">
+    <button id="appleSignInBtn">Sign in to Apple Music</button>
+    <button id="playSnippetBtn" disabled>Play Snippet</button>
+  </div>
 
   <script>
-    // 1) Playlist of songs. Replace 'url' with your own MP3 links.
-    const songs = [
-      {
-        title: 'We Wish You a Merry Christmas',
-        url: 'https://cdn.pixabay.com/download/audio/2021/12/13/audio_b2b4b398e3.mp3?filename=we-wish-you-a-merry-christmas-22356.mp3'
-      },
-      {
-        title: 'Deck the Halls',
-        url: 'https://cdn.pixabay.com/download/audio/2021/12/11/audio_7a166ecff6.mp3?filename=deck-the-halls-21977.mp3'
-      },
-      {
-        title: 'Jingle Bells',
-        url: 'https://cdn.pixabay.com/download/audio/2021/10/23/audio_e40bc83c55.mp3?filename=jingle-bells-19567.mp3'
-      }
-    ];
+    /***********************************************
+     * 1) Configure MusicKit with your credentials
+     ***********************************************/
+    const developerToken = 'eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkFRTDQ4TUFTMkIifQ.eyJpYXQiOjE3MzUyMjM1MjksImV4cCI6MTc1MDc3NTUyOSwiaXNzIjoiSjZES1MzOTU4RyJ9.KYvGnk4HjTQ7s2OyqS6AAihx4lXkRH6Uf1eD1lBRue9WY143ZmEmv2jEQx_StCetHS6tZX7oSIg5LT7N9FHkrw'; 
+    // IMPORTANT: Replace this with your *own* Apple Music developer token.
 
-    let currentSongIndex = 0;
+    const playlistId = 'pl.c21e1cd068b54c3581f4c92d9e1545b5'; 
+    // Replace with your Apple Music playlist ID, e.g. 'pl.u-ALabc123...'
 
+    // We'll store the MusicKit instance globally.
+    let music;
+
+    // DOM elements
+    const appleSignInBtn = document.getElementById('appleSignInBtn');
     const playSnippetBtn = document.getElementById('playSnippetBtn');
-    const audioPlayer = document.getElementById('audioPlayer');
-    const songInfo = document.getElementById('songInfo');
+    const songInfo       = document.getElementById('songInfo');
+
+    // This will hold our setTimeout handle for snippet length
     let snippetTimeout = null;
 
-    // 2) Load the current song into the player
-    function loadCurrentSong() {
-      const { title, url } = songs[currentSongIndex];
-      audioPlayer.src = url;
-      audioPlayer.currentTime = 0;
-      audioPlayer.pause();
-      songInfo.textContent = `Now playing: ${title}`;
-    }
+    /***********************************************
+     * 2) Initialize MusicKit
+     ***********************************************/
+    document.addEventListener('musickitloaded', () => {
+      MusicKit.configure({
+        developerToken: developerToken,
+        app: {
+          name: 'PassTheParcel',
+          build: '1.0'
+        }
+      });
+      // Grab the MusicKit instance
+      music = MusicKit.getInstance();
 
-    // 3) Move to the next song (wrap around if at the end)
-    function nextSong() {
-      currentSongIndex = (currentSongIndex + 1) % songs.length;
-      loadCurrentSong();
-    }
+      // We want to loop the entire playlist when it ends
+      music.player.repeatMode = MusicKit.REPEAT_MODE_ALL;
 
-    // 4) On "Play Snippet," we play a random chunk (5–30s).
-    //    If the snippet reaches the end of the song, we advance to nextSong().
-    playSnippetBtn.addEventListener('click', () => {
-      // Disable button until snippet is done
-      playSnippetBtn.disabled = true;
+      // Let the user sign in to Apple Music
+      appleSignInBtn.disabled = false;
 
-      // Random snippet length: 5 to 30 seconds
-      let snippetLength = Math.floor(Math.random() * 26) + 5;
+      // Update track info when player changes tracks
+      music.player.addEventListener('mediaItemDidChange', updateSongInfo);
 
-      // If the user clicks too quickly, duration might be 0 or NaN.
-      // We'll try to handle that by waiting for loadedmetadata if needed.
-      const duration = audioPlayer.duration;
+      // Also handle playback ended (just in case user’s snippet ends exactly at track end)
+      music.player.addEventListener('playbackStateDidChange', () => {
+        if (music.player.playbackState === MusicKit.PlaybackStates.ENDED) {
+          // If a track ended, Apple MusicKit auto-advances to next track in the queue,
+          // so we just update our displayed info.
+          updateSongInfo();
+        }
+      });
+    });
 
-      // If we don't know the duration yet, or it's zero, attempt to play the song 
-      // so the browser loads enough to get metadata. We'll try a small delay.
-      if (!duration || isNaN(duration)) {
-        audioPlayer.play();
-        audioPlayer.pause();
-        // Wait a moment for metadata to load, then do the snippet logic
-        setTimeout(() => {
-          playSnippet();
-        }, 300);
-      } else {
-        // If we already know the duration, proceed
-        playSnippet();
+    /***********************************************
+     * 3) Sign In / Set Playlist / Start
+     ***********************************************/
+    appleSignInBtn.addEventListener('click', async () => {
+      try {
+        // Request user authorization to Apple Music
+        await music.authorize();
+
+        // If successful, set the queue to our desired playlist
+        await music.setQueue({ playlist: playlistId });
+
+        // Now that we have a queue, enable snippet button
+        playSnippetBtn.disabled = false;
+        appleSignInBtn.disabled = true;
+
+        // Display the first track info
+        updateSongInfo();
+      } catch (err) {
+        console.error('Apple Music authorization failed:', err);
+        alert('Failed to sign in to Apple Music. Please try again.');
       }
     });
 
-    function playSnippet() {
-      const duration = audioPlayer.duration;
-      const timeLeft = duration - audioPlayer.currentTime;
+    /***********************************************
+     * 4) "Play Snippet" button logic
+     ***********************************************/
+    playSnippetBtn.addEventListener('click', () => {
+      // Disable snippet button while snippet is playing
+      playSnippetBtn.disabled = true;
 
-      // Actual snippet might be shortened if there's not enough time left
-      let snippetLength = Math.floor(Math.random() * 26) + 5;
-      if (snippetLength > timeLeft) {
-        snippetLength = timeLeft; 
-      }
+      // Pick a random snippet length (5–30 seconds)
+      const snippetLength = Math.floor(Math.random() * 26) + 5;
 
-      // Start playback
-      audioPlayer.play();
+      // Start or resume playback
+      music.player.play();
 
-      // Clear any previous timeout
+      // Clear any previous snippet timeout
       if (snippetTimeout) {
         clearTimeout(snippetTimeout);
       }
 
-      // Pause after the snippet
+      // After snippetLength seconds, pause playback
       snippetTimeout = setTimeout(() => {
-        audioPlayer.pause();
+        // If we’re at or beyond the track’s duration, Apple MusicKit will auto-advance.
+        // We just pause, letting Apple’s logic handle the next track if the song ended exactly.
+        music.player.pause();
 
-        // If we've reached (or passed) the end of the song, move to next
-        if (audioPlayer.currentTime >= audioPlayer.duration) {
-          nextSong();
-        }
-
+        // Re-enable button
         playSnippetBtn.disabled = false;
       }, snippetLength * 1000);
-    }
-
-    // 5) Initialize by loading the first song
-    loadCurrentSong();
-
-    // Optional: when the song itself ends naturally (if snippet goes exactly to end)
-    // ensure we move to the next. Some browsers might fire "ended" event.
-    audioPlayer.addEventListener('ended', () => {
-      nextSong();
     });
-  </script>
 
+    /***********************************************
+     * 5) Update Song Info Display
+     ***********************************************/
+    function updateSongInfo() {
+      const currentItem = music.player.nowPlayingItem;
+      if (currentItem) {
+        // Construct a user-friendly label
+        const artist  = currentItem.artistName || 'Unknown Artist';
+        const album   = currentItem.albumName  || 'Unknown Album';
+        const track   = currentItem.title      || 'Unknown Title';
+        songInfo.textContent = `Now playing: ${track} — ${artist} (${album})`;
+      } else {
+        songInfo.textContent = 'No track loaded.';
+      }
+    }
+  </script>
 </body>
 </html>
