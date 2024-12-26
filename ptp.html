@@ -132,7 +132,7 @@
     /***********************************************
      * 4) "Play Snippet" button logic
      ***********************************************/
-    playSnippetBtn.addEventListener('click', () => {
+    playSnippetBtn.addEventListener('click', async () => {
       // Disable snippet button while snippet is playing
       playSnippetBtn.disabled = true;
 
@@ -140,7 +140,8 @@
       const snippetLength = Math.floor(Math.random() * 26) + 5;
 
       // Start or resume playback
-      music.play();
+      await music.play();
+      updateSongInfo();
 
       // Clear any previous snippet timeout
       if (snippetTimeout) {
