@@ -94,7 +94,7 @@
       appleSignInBtn.disabled = false;
 
       // Update track info when player changes tracks
-      music.addEventListener('mediaItemDidChange', updateSongInfo);
+      music.addEventListener('nowPlayingItemDidChange', () => {updateSongInfo();});
 
       //Also handle playback ended (just in case user’s snippet ends exactly at track end)
       music.addEventListener('playbackStateDidChange', () => {
